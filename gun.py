@@ -65,7 +65,7 @@ class ball():
 
 
     def hittest(self, obj):
-        if (ob.x - self.x) ** 2 + (ob.y - self.y) ** 2 <= (ob.r + self.r) ** 2:
+        if (obj.x - self.x) ** 2 + (obj.y - self.y) ** 2 <= (obj.r + self.r) ** 2:
             return True
         else:
             return False

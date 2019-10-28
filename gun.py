@@ -3,7 +3,6 @@ import tkinter as tk
 import math
 import time
 
-# print (dir(math))
 
 root = tk.Tk()
 fr = tk.Frame(root)
@@ -54,15 +53,14 @@ class ball():
             self.vy = -self.vy / 2
             self.vx = self.vx / 2
             self.y = 569
-            if self.death <= 0:
+            if self.live <= 0:
                 balls.pop(balls.index(self))
                 canv.delete(self.id)
             else:
-                self.death -= 1
+                self.live -= 1
         if self.x >= 770:
             self.vx = -self.vx
             self.x = 769
-
 
     def hittest(self, obj):
         if (obj.x - self.x) ** 2 + (obj.y - self.y) ** 2 <= (obj.r + self.r) ** 2:
@@ -124,8 +122,8 @@ class target():
     def __init__(self):
         self.points = 0
         self.live = 1
-        self.id = canv.create_oval(0,0,0,0)
-        self.id_points = canv.create_text(30,30,text = self.points,font = '28')
+        self.id = canv.create_oval(0, 0, 0, 0)
+        self.id_points = canv.create_text(30, 30, text=self.points, font='28')
         self.new_target()
 
     def new_target(self):
@@ -152,7 +150,7 @@ balls = []
 
 
 def new_game(event=''):
-    global gun, t1, screen1, balls, bullet
+    global t1, screen1, balls, bullet
     t1.new_target()
     bullet = 0
     balls = []

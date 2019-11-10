@@ -1,14 +1,14 @@
 from random import randrange as rnd, choice
-import tkinter as tk
+from tkinter import *
 import math
 import time
 
 
-root = tk.Tk()
-fr = tk.Frame(root)
+root = Tk()
+fr = Frame(root)
 root.geometry('800x600')
-canv = tk.Canvas(root, bg='white')
-canv.pack(fill=tk.BOTH, expand=1)
+canv = Canvas(root, bg='white')
+canv.pack(fill=BOTH, expand=1)
 
 
 class ball():
@@ -179,5 +179,4 @@ def new_game(event=''):
 
 
 new_game()
-
 mainloop()

@@ -24,7 +24,7 @@ class ball():
         self.r = 10
         self.vx = 0
         self.vy = 0
-        self.color = choice(['blue', 'green', 'red', 'brown'])
+        self.color = choice(['blue', 'green', 'red', 'brown', 'purple', 'orange', 'yellow', 'black'])
         self.id = canv.create_oval(
                 self.x - self.r,
                 self.y - self.r,
@@ -120,6 +120,8 @@ class gun():
 
 class target():
     def __init__(self):
+        self.vy = rnd(1, 10)
+        self.vx = rnd(1, 10)
         self.points = 0
         self.live = 1
         self.id = canv.create_oval(0, 0, 0, 0)
@@ -128,8 +130,8 @@ class target():
 
     def new_target(self):
         """ Инициализация новой цели. """
-        x = self.x = rnd(600, 780)
-        y = self.y = rnd(300, 550)
+        x = self.x = rnd(600, 700)
+        y = self.y = rnd(400, 500)
         r = self.r = rnd(2, 50)
         color = self.color = 'red'
         canv.coords(self.id, x-r, y-r, x+r, y+r)
@@ -141,6 +143,23 @@ class target():
         self.points += points
         canv.itemconfig(self.id_points, text=self.points)
 
+    def move(self):
+        self.y += self.vy
+        self.x += self.vx
+        if self.x < 550 or self.x > 750:
+            self.vx = (-1) * self.vx
+        if self.y < 150 or self.y > 550:
+            self.vy = (-1) * self.vy
+        self.set_coords()
+
+    def set_coords(self):
+        canv.coords(
+                self.id,
+                self.x - self.r,
+                self.y - self.r,
+                self.x + self.r,
+                self.y + self.r
+        )
 
 t1 = target()
 t2 = target()
@@ -164,14 +183,18 @@ def new_game(event=''):
     t1.live = 1
     t2.live = 1
     while t1.live or t2.live or balls:
+        t1.move()
+        t2.move()
         for b in balls:
             b.move()
             if b.hittest(t1) and t1.live:
                 t1.live = 0
                 t1.hit()
+                canv.delete(t1.id)
             if b.hittest(t2) and t2.live:
                 t2.live = 0
                 t2.hit()
+                canv.delete(t2.id)
             if t1.live == 0 and t2.live == 0:
                 canv.bind('<Button-1>', '')
                 canv.bind('<ButtonRelease-1>', '')

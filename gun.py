@@ -130,8 +130,8 @@ class target():
 
     def new_target(self):
         """ Инициализация новой цели. """
-        x = self.x = rnd(600, 700)
-        y = self.y = rnd(400, 500)
+        x = self.x = rnd(50, 750)
+        y = self.y = rnd(50, 550)
         r = self.r = rnd(2, 50)
         color = self.color = 'red'
         canv.coords(self.id, x-r, y-r, x+r, y+r)
@@ -146,9 +146,9 @@ class target():
     def move(self):
         self.y += self.vy
         self.x += self.vx
-        if self.x < 550 or self.x > 750:
+        if self.x < self.r or self.x > 800 - self.r:
             self.vx = (-1) * self.vx
-        if self.y < 150 or self.y > 550:
+        if self.y < self.r or self.y > 600 - self.r:
             self.vy = (-1) * self.vy
         self.set_coords()
 
@@ -161,8 +161,6 @@ class target():
                 self.y + self.r
         )
 
-t1 = target()
-t2 = target()
 screen1 = canv.create_text(400, 300, text='', font='28')
 g1 = gun()
 bullet = 0
@@ -170,7 +168,9 @@ balls = []
 
 
 def new_game(event=''):
-    global t1, t2, screen1, balls, bullet
+    global screen1, balls, bullet
+    t1 = target()
+    t2 = target()
     t1.new_target()
     t2.new_target()
     bullet = 0
